@@ -7,6 +7,6 @@ module load biokit
 /projappl/adapterremoval --file1 ${name}.fastq.gz --file2 ${name}.fastq.gz --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCA --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT --basename /aDNA/AdaptorRemoval/${name}/${name} --collapse --trimns --trimqualities --gzip
 
 #Alignment
-bwa mem -t4 -M [reference].fa /aDNA/AdaptorRemoval/${name}/${name}.pair1.truncated.gz /aDNA/AdaptorRemoval/${name}/${name}.pair2.truncated.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_PE.bam
-bwa mem -t4 -M [reference].fa /aDNA/AdaptorRemoval/${name}/${name}.collapsed.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_ME.bam
-bwa mem -t4 -M [reference].fa /aDNA/AdaptorRemoval/${name}/${name}.collapsed.truncated.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_MET.bam
+bwa mem -t4 -M [REFERENCE].fa /aDNA/AdaptorRemoval/${name}/${name}.pair1.truncated.gz /aDNA/AdaptorRemoval/${name}/${name}.pair2.truncated.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_PE.bam
+bwa mem -t4 -M [REFERENCE].fa /aDNA/AdaptorRemoval/${name}/${name}.collapsed.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_ME.bam
+bwa mem -t4 -M [REFERENCE].fa /aDNA/AdaptorRemoval/${name}/${name}.collapsed.truncated.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_MET.bam
