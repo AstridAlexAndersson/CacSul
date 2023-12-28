@@ -1,12 +1,12 @@
 #set the input file to process
-name=$(sed -n ${SLURM_ARRAY_TASK_ID}p namelistMRG)
+name=$(sed -n ${SLURM_ARRAY_TASK_ID}p namelist)
 
 module load biokit
 
 #Adapter removal
-/projappl/adapterremoval --file1 /aDNA/step2_FastQScreen/${name}/${name}.fastq.gz --file2 /aDNA/step2_FastQScreen/${name}/${name}.fastq.gz --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCA --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT --basename /aDNA/step3_AdaptorRemoval/${name}/${name} --collapse --trimns --trimqualities --gzip
+/projappl/adapterremoval --file1 ${name}.fastq.gz --file2 ${name}.fastq.gz --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCA --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT --basename /aDNA/AdaptorRemoval/${name}/${name} --collapse --trimns --trimqualities --gzip
 
 #Alignment
-bwa mem -t4 -M  /genomes/Probosciger_aterrimus/GCA_013397665.1_ASM1339766v1.fa /aDNA/step3_AdaptorRemoval/${name}/${name}.pair1.truncated.gz /aDNA/step3_AdaptorRemoval/${name}/${name}.pair2.truncated.gz | samtools view -F4 -hb -o /aDNA/step4_preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_PE.bam
-bwa mem -t4 -M  /genomes/Probosciger_aterrimus/GCA_013397665.1_ASM1339766v1.fa /aDNA/step3_AdaptorRemoval/${name}/${name}.collapsed.gz | samtools view -F4 -hb -o /aDNA/step4_preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_ME.bam
-bwa mem -t4 -M  /genomes/Probosciger_aterrimus/GCA_013397665.1_ASM1339766v1.fa /aDNA/step3_AdaptorRemoval/${name}/${name}.collapsed.truncated.gz | samtools view -F4 -hb -o /aDNA/step4_preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_MET.bam
+bwa mem -t4 -M [reference].fa /aDNA/AdaptorRemoval/${name}/${name}.pair1.truncated.gz /aDNA/AdaptorRemoval/${name}/${name}.pair2.truncated.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_PE.bam
+bwa mem -t4 -M [reference].fa /aDNA/AdaptorRemoval/${name}/${name}.collapsed.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_ME.bam
+bwa mem -t4 -M [reference].fa /aDNA/AdaptorRemoval/${name}/${name}.collapsed.truncated.gz | samtools view -F4 -hb -o /aDNA/Preliminary_bams/${name}_${SLURM_ARRAY_TASK_ID}_MET.bam
