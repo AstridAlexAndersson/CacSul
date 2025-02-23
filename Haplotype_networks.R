@@ -9,10 +9,11 @@ library(viridisLite)
 setwd("~/Desktop/[FOLDER]")
 
 ###READ DNA data into R
-
+#I use "YCC" as the data name i.e. Yellow-Crested Cockatoos, but you can change this
 YCC<-read.dna("[INDIVIDUAL_GENE_FASTAFILE].fas", format="fasta")
 YCC
 
+#this info file contains 2 columns of data "ID" with sample names, and "Species_16S" with population/species info
 YCC.info<-read.csv("[INFO_FILE}.info.csv",header=T)
 YCC.info
 YCC.info$ID
